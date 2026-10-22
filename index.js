@@ -28,6 +28,11 @@ const corsOptions = { exposedHeaders: "Authorization" };
 app.use(cors(corsOptions));
 app.use(express.json());
 
+app.use((req, res, next) => {
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+  next();
+});
+
 app.use(cookieParser());
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
