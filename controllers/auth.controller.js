@@ -35,7 +35,10 @@ export const signin = async (req, res, next) => {
       .status(200)
       .json(rest);
   } catch (error) {
-    next(error);
+    // next(error);
+    res
+      .status(500)
+      .json({ success: false, error: "Server error", errorMsg: error });
   }
 };
 
