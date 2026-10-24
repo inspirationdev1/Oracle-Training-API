@@ -20,18 +20,8 @@ export const signup = async (req, res, next) => {
   }
 };
 
+
 export const signin = async (req, res, next) => {
-  const { email, password } = req.body;
-  try {
-    res.status(200).json({ success: true, message: "Login working fine" });
-  } catch (error) {
-    // next(error);
-    res
-      .status(500)
-      .json({ success: false, error: "Server error", errorMsg: error });
-  }
-};
-export const signin_orig = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const validUser = await User.findOne({ email });
