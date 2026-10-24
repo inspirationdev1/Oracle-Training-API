@@ -37,19 +37,29 @@ const corsOptions = { exposedHeaders: "Authorization" };
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.use((req, res, next) => {
-  res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+//   next();
+// });
 
 app.use(cookieParser());
 const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => {
-  console.log("Server is running at port =>", PORT);
+const INSTANCE = process.env.INSTANCE || "API-1";
+
+app.get("/health", (req, res) => {
+  res.json({
+    status: "OK",
+    instance: INSTANCE,
+  });
 });
-// app.listen(3000, () => {
-//   console.log("Server is running on port 3000!");
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`${INSTANCE} running on port ${PORT}`);
+});
+// app.listen(PORT, () => {
+//   console.log("Server is running at port =>", PORT);
 // });
+
+
 
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
