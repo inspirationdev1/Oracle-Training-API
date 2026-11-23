@@ -20,7 +20,6 @@ export const signup = async (req, res, next) => {
   }
 };
 
-
 export const signin = async (req, res, next) => {
   const { email, password } = req.body;
   try {
@@ -49,8 +48,18 @@ export const google = async (req, res, next) => {
     if (user) {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       const { password: pass, ...rest } = user._doc;
+      // res
+      //   .cookie("access_token", token, { httpOnly: true })
+      //   .status(200)
+      //   .json(rest);
       res
-        .cookie("access_token", token, { httpOnly: true })
+        .cookie("access_token", token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none",
+          maxAge: 7 * 24 * 60 * 60 * 1000,
+          path: "/",
+        })
         .status(200)
         .json(rest);
       console.log(res);

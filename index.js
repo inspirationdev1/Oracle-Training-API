@@ -33,14 +33,23 @@ const __dirname = path.resolve();
 const app = express();
 
 // middleware
-const corsOptions = { exposedHeaders: "Authorization" };
+// const corsOptions = { exposedHeaders: "Authorization" };
+const corsOptions = {
+  origin: [
+    "https://school-frontend-m01u.onrender.com",
+    "http://localhost:5173",
+  ],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// app.use((req, res, next) => {
-//   res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
-//   next();
-// });
+app.use((req, res, next) => {
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+  next();
+});
 
 app.use(cookieParser());
 const PORT = process.env.PORT || 5001;
@@ -58,8 +67,6 @@ app.listen(PORT, "0.0.0.0", () => {
 // app.listen(PORT, () => {
 //   console.log("Server is running at port =>", PORT);
 // });
-
-
 
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
