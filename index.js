@@ -36,7 +36,8 @@ const app = express();
 // const corsOptions = { exposedHeaders: "Authorization" };
 const corsOptions = {
   origin: [
-    "https://school-frontend-m01u.onrender.com",
+    "https://oracle-training-frontend.onrender.com",
+    "https://oracle.inspiration-academy.net",
     "http://localhost:5173",
   ],
   credentials: true,
